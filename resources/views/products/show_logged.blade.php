@@ -3,10 +3,10 @@
 @section('main_content')
     <div class="form-group">
         <h3>{{$success}}</h3>
-        @if(Auth::user()->bid_count!=0)
+        @if(Auth::user()->bid_count>$product->price)
         <a href="{{ route('bidders.create',['product_id'=>$product->id]) }}" class="btn btn-gray">Start Bidding</a>
             @else
-        <h3>You have no bids now</h3><a href="#" class="btn btn-gray">Buy more bids</a>
+            <a href="{{ route('bidders.create',['product_id'=>$product->id]) }}" class="btn btn-gray">Upgrade to premium</a>
             @endif
     </div>
     <hr>

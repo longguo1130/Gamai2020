@@ -5,17 +5,14 @@
             {{App\Product::where('id',$review->product_id)->first()->title}}
         </div>
         <div class="transaction-rating">
-            @if($review->transaction_type == 0)
-                <span class="fa fa-plus"></span>
+
+            {{--@endfor--}}
+            @if($review->feedback_type == 0)
+            <span class="fa fa-plus"></span>
             @else
-                <span class="fa fa-minus"></span>
+            <span class="fa fa-minus"></span>
             @endif
-            @for($i=0;$i<$review->rating;$i++)
-            <span class="fa fa-star" style="color:orange;"></span>
-            @endfor
-            @for($i=0;$i<5-$review->rating;$i++)
-                <span class="fa fa-star" ></span>
-            @endfor
+            <div class="star-ratings-sprite" style="margin-top:-3px;"><span style="width:{{$review->rating*20}}%" class="star-ratings-sprite-rating"></span></div>
 
 
            <h3 style="margin: -8px 30px;">{{App\Product::where('id',$review->product_id)->first()->seller==Auth::user()->username?'Seller':'Buyer'}}</h3>
@@ -28,6 +25,6 @@
         </div>
     </div>
     @empty
-        No products now...
+        No Reviews now...
     @endforelse
 </div>

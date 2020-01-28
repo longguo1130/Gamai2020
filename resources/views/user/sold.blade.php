@@ -16,7 +16,7 @@
                     <td>
                         <a href="{{ route('products.show',['id'=>$post->productInfo['id']])}}">{{$post->productInfo['title']}}</a>
                     </td>
-                    <td>{{$post->buyer_info['username']}}</td>
+                    <td>{{$post->buyerInfo['username']}}</td>
 
                     <td>Seller</td>
                     <td>{{$post->updated_at}}</td>
@@ -24,17 +24,17 @@
                         <td>{{App\Feedback::where('product_id' ,$post->product_id)->where('from_user',Auth::user()->id)->first()->feedback_type==0?'Positive':'Negative'}}:
                             {{App\Feedback::where('product_id' ,$post->product_id)->where('from_user',Auth::user()->id)->first()->rating}}</td>
                     @else
-                        <td>Provide Feedback</td>
+                        <td><a href="{{route('bidders.feed',['id'=>$post->id])}}">Write Review</a></td>
                     @endif
                     @if(!empty(App\Feedback::where('product_id' ,$post->product_id)->where('to_user',Auth::user()->id)->first()))
                         <td>{{App\Feedback::where('product_id' ,$post->product_id)->where('to_user',Auth::user()->id)->first()->feedback_type==0?'Positive':'Negative'}}:{{App\Feedback::where('product_id' ,$post->product_id)->where('to_user',Auth::user()->id)->first()->rating}}</td>
                     @else
-                        <td>still not</td>
+                        <td>Waiting</td>
                     @endif
 
                 </tr>
             @endif
-            @if($post->buyer_info['id'] == Auth::user()->id)
+            @if($post->buyerInfo['id'] == Auth::user()->id)
                 <tr>
                     <td>
                         <a href="{{ route('products.show',['id'=>$post->productInfo['id']])}}">{{$post->productInfo['title']}}</a>
@@ -45,12 +45,12 @@
                     @if(!empty(App\Feedback::where('product_id' ,$post->product_id)->where('from_user',Auth::user()->id)->first()))
                         <td>{{App\Feedback::where('product_id' ,$post->product_id)->where('from_user',Auth::user()->id)->first()->feedback_type==0?'Positive':'Negative'}}:{{App\Feedback::where('product_id' ,$post->product_id)->where('from_user',Auth::user()->id)->first()->rating}}</td>
                     @else
-                        <td><a href="{{route('bidders.feed',['id'=>$post->id])}}">Provide Feedback</a></td>
+                        <td><a href="{{route('bidders.feed',['id'=>$post->id])}}">Write Review</a></td>
                     @endif
                     @if(!empty(App\Feedback::where('product_id' ,$post->product_id)->where('to_user',Auth::user()->id)->first()))
                         <td>{{App\Feedback::where('product_id' ,$post->product_id)->where('to_user',Auth::user()->id)->first()->feedback_type==0?'Positive':'Negative'}}:{{App\Feedback::where('product_id' ,$post->product_id)->where('to_user',Auth::user()->id)->first()->rating}}</td>
                     @else
-                        <td>still not</td>
+                        <td>Waiting</td>
                     @endif
 
                 </tr>

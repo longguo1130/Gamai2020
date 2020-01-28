@@ -20,7 +20,7 @@
                                 <select name="feedback_type" id="feedback_type">
                                     <option value="0">Positive</option>
                                     <option value="1">Negative</option>
-                                    <option value="2">Other</option>
+
                                 </select>
 
                             </div>

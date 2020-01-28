@@ -40,7 +40,26 @@
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{$user->verify_status}}%;"></div>
                         </div>
                         Verified with <span></span>
+                        @if(Auth::user()->id == $user->id)
                         <a href="{{route('profile.edit',['id'=>$user->id])}}">Edit profile <i class="fa fa-user"></i></a>
+                            @endif
+                        @if(empty(Auth::user()->valid_id))
+                        <form action="{{route('upload.id',['id'=>Auth::user()->id])}}" method="POST" enctype="multipart/form-data">
+                           {{csrf_field()}}
+                            <input type="file" name="image">
+                            <button type="submit">Upload your ID</button>
+                            <div class="progress">
+                                <div class="progress-bar upload" role="progressbar" aria-valuenow=""
+                                     aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                    0%
+                                </div>
+                            </div>
+                            <br />
+                            <div id="success">
+
+                            </div>
+                        </form>
+                            @endif
                     </div>
 
                 </div>
@@ -149,6 +168,32 @@
                     $('#sold').html(data.sold_html);
                     $('#favor').html(data.favor_html);
                     $('#bidding').html(data.bidding_html);
+                }
+            });
+            $('form').ajaxForm({
+                beforeSend:function(){
+                    $('#success').empty();
+                },
+                uploadProgress:function(event, position, total, percentComplete)
+                {
+                    $('.upload').text(percentComplete + '%');
+                    $('.upload').css('width', percentComplete + '%');
+                },
+                success:function(data)
+                {
+                    if(data.errors)
+                    {
+                        $('.upload').text('0%');
+                        $('.upload').css('width', '0%');
+                        $('#success').html('<span class="text-danger"><b>'+data.errors+'</b></span>');
+                    }
+                    if(data.success)
+                    {
+                        $('.upload').text('Uploaded');
+                        $('.upload').css('width', '100%');
+                        $('#success').html('<span class="text-success"><b>'+data.success+'</b></span><br /><br />');
+
+                    }
                 }
             });
         });

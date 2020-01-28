@@ -10,9 +10,9 @@
     <title>Gamai</title>
 
     <!-- Scripts -->
-    {{--<script src="{{ asset('js/app.js') }}"></script>--}}
+{{--<script src="{{ asset('js/app.js') }}"></script>--}}
 
-    <!-- Fonts -->
+<!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
@@ -49,7 +49,9 @@
     var base_url = '{{ url("/") }}';
 </script>
 <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+
 <script src="{{ asset('js/chat.js') }}"></script>
+<script src="{{ asset('js/jquery.form.js') }}"></script>
 
 
 

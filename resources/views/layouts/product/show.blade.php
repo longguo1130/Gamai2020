@@ -32,18 +32,18 @@
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="shareList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-dialog" role="document" style="margin-top: 10%;">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h2>Share this listing</h2>
                                             </div>
                                             <div class="modal-body">
-                                                <a href="http://facebook.com"><img src="{{asset('assets/Asset 2@4x.png')}}" alt="" style="width: 44%;height: 40px;"></a>
+                                                <a href="http://facebook.com"><img src="{{asset('assets/Asset 2@4x.png')}}" alt="" style="width: 40%;height: 40px;"></a>
                                                 <a href="http://facebook.com" ><img src="{{asset('assets/Asset 2@4x.png')}}" alt="" style="width: 40%;height: 40px;"></a>
-                                               <div class="copylink" style="text-align: center;margin-top: 10px">
-                                                   <input type="text" value="{{url()->current()}}" id="myInput" style="width: 60%;">
-                                                   <button onclick="myFunction()">Copy Link</button>
-                                               </div>
+                                                <div class="copylink" style="text-align: center;margin-top: 10px;width: 93%;">
+                                                    <input type="text" value="{{url()->current()}}" id="myInput" style="width: 60%;">
+                                                    <button onclick="myFunction()">Copy Link</button>
+                                                </div>
 
                                             </div>
 
@@ -84,7 +84,8 @@
                     @foreach($bid as $post)
                         <div class="bidder_content">
                             <div class="title">
-                                <span>Bid:{{$post->bid_price}} </span><span>Duration:{{$post->duration}} </span><span>Rating:{{App\User::find($post->buyer_id)->rating}}</span>
+                                <span>Bid:{{$post->bid_price}} </span><span>Duration:{{$post->duration}} </span>
+                                <span><a href="{{route('bidder.review',['id'=>App\User::where('id',$post->buyer_id)->first()->id])}}">{{App\User::where('id',$post->buyer_id)->first()->rating*20}}% Positive</a></span>
                                 @if($post->buyer_id == Auth::user()->id)
                                     @if($post->status == 1)
                                     <span>Your bid Awarded</span>

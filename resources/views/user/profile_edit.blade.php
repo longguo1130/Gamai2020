@@ -39,6 +39,7 @@
                         <h5 style="padding-top: 20%;padding-left: 5%;">Image must be in JPG or PNG and under 5mb.</h5>
                     </div>
                 </div>
+
                 <hr>
 
                 <form id="product-info" class="form-horizontal" method="POST" action="{{ route('profile.store',['id'=>Auth::user()->id]) }}">
@@ -51,13 +52,9 @@
                                 <input id="fullname" type="text" class="form-control" name="fullname" value="{{ $post->fullname }}"
                                        required>
                             </div>
-                            {{--<div class="form-group{{ $errors->has('address1') ? ' has-error' : '' }}">--}}
-                            {{--<label for="address1" class="col-md-4 control-label">Address 1</label>--}}
-                            {{--<input id="address1" type="text" class="form-control" name="address1" value="{{ $post->address1 }}"--}}
-                            {{--required>--}}
-                            {{--</div>--}}
+
                             <div class="form-group{{ $errors->has('address1') ? ' has-error' : '' }}">
-                                <label for="location" class="col-md-4 control-label">Address1</label>
+                                <label for="location" class="col-md-4 control-label">City</label>
                                 <input id="location" type="text" class="form-control" name="address1" value="{{$post->address1}}" required>
 
                             </div>
@@ -75,7 +72,7 @@
 
                             </div>
                             <div class="form-group">
-                                <button>Upload Valid ID</button>List of Valid ID's
+
                             </div>
                         </div>
 
@@ -92,7 +89,7 @@
                                        required>
                             </div>
                             <div class="form-group">
-                                <label for="address2" class="col-md-4 control-label">Location2</label>
+                                <label for="address2" class="col-md-4 control-label">Location</label>
                                 <input id="address2" type="text" class="form-control" name="address2" value="{{ $post->address2 }}"
                                 >
                             </div>

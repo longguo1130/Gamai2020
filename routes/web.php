@@ -30,6 +30,12 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('profile/image/uploaded','UserController@uploaded_image')->name('profile.image.uploaded');
     Route::get('admin','AdminController@home')->name('admin');
     Route::get('detail/admin','AdminController@admin_detail')->name('admin.detail');
+    Route::post('upload/{id?}/valid_id','UserController@upload_id')->name('upload.id');
+
+    Route::any('admin/user/{id?}/edit','AdminController@user_edit')->name('admin.user.edit');
+    Route::any('admin/user/{id?}/delete','AdminController@user_delete')->name('admin.user.delete');
+    Route::any('admin/user/{id?}/store','AdminController@user_store')->name('admin.user.store');
+    Route::any('admin/user/{id?}/valid_id','AdminController@user_valid_id')->name('admin.user.valid_id');
 });
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -59,6 +65,7 @@ Route::any('product/{id?}/destroy','ProductController@destroy')->name('products.
 Route::any('bidding/list','BidderController@bidding_list')->name('bidding.list');
 Route::any('bidder/{id?}/feedback','BidderController@feedback')->name('bidders.feedback');
 Route::any('bidder/{id?}/feed','BidderController@provide_feedback')->name('bidders.feed');
+Route::any('bidder/{id?}/review','BidderController@show_review')->name('bidder.review');
 
 /* Chat */
 Route::get('/load-latest-messages', 'MessagesController@getLoadLatestMessages');
