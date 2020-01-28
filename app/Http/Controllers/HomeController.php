@@ -66,7 +66,7 @@ class HomeController extends Controller
 
 
 
-        $products = Product::selling()->where('title','like','%'.$query.'%')
+        $products = Product::where('status',0)->where('title','like','%'.$query.'%')
             ->where('category_id','like',$category_id)
             ->where('city_id','like',$city_id);
         if($price_max != 0 and $price_min != 0){

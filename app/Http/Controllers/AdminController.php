@@ -51,4 +51,47 @@ class AdminController extends Controller
 
         ]);
     }
+
+    public  function user_edit(Request $request){
+        $user = User::find($request->id);
+        return view('admin.user_edit',['user'=>$user]);
+    }
+
+    public function user_store(Request $request){
+
+        $user = User::find($request->id);
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->mobile = $request->mobile;
+        $user->verify_status = $request->verify_status;
+        $user->rating = $request->rating;
+        $user->transaction_count = $request->transaction_count;
+        $user->bid_count = $request->bid_count;
+        $user->user_role = $request->user_role;
+        $user->save();
+
+        return redirect('admin');
+
+    }
+
+    public  function user_delete(Request $request){
+
+        User::find($request->id)->delete();
+
+        return redirect()->back();
+
+    }
+
+    public function user_valid_id(Request $request){
+        $user = User::find($request->id);
+        if ($request->accept ==1){
+            $user->update(['valid_id_status'=>1,'verify_status'=>$user->verify_status+10]);
+
+        }
+        else{
+            $user->update(['valid_id_status'=>2,'valid_id'=>null]);
+        }
+        return redirect('admin');
+
+    }
 }

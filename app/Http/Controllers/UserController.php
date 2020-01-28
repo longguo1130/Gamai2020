@@ -51,7 +51,8 @@ class UserController extends Controller
         $user = User::find(Auth::user()->id);
 
 
-        $feedbacks = Feedback::where('to_user',Auth::user()->id)->get();
+        $feedbacks = Feedback::where('to_user',Auth::user()->id)->where('feedback_type',0)->get();
+        $count = Feedback::where('to_user',Auth::user()->id)->get();
 
         $user->rating = 0;
         foreach ($feedbacks as $feedback){
@@ -59,7 +60,7 @@ class UserController extends Controller
         }
         if ($user->rating != 0){
 
-            $user->rating = round($user->rating/count($feedbacks),1);
+            $user->rating = round($user->rating/count($count),1);
 
         }
 
@@ -84,8 +85,10 @@ class UserController extends Controller
         $request->validate([
             'password' => 'confirmed',
 
+
         ]);
-//        dd($request->password);
+
+
         $user = User::find($request->id);
         $user->fullname = $request->fullname;
         $user->address1 = $request->address1;
@@ -99,6 +102,7 @@ class UserController extends Controller
         if ($user->update_count == 1){
             $user->verify_status = $user->verify_status + 10;
         }
+
         $user->save();
 
         $post_id = $request->id;
@@ -263,5 +267,29 @@ class UserController extends Controller
         }
 
     }
+
+    public function upload_id(Request $request){
+        $file = $request->file('image');
+
+        $filename = $file->getClientOriginalName();
+
+        $upload_filename = time().'.'.$file->extension();
+
+        $input['image'] = $upload_filename;
+        $destinationPath = public_path('valid_ids');
+        $img = Image::make($file->path());
+
+        $img->save($destinationPath.DIRECTORY_SEPARATOR.$input['image']);
+        User::find($request->id)->update(['valid_id'=>$upload_filename]);
+        $output = array(
+            'success' => 'Image uploaded successfully'
+        );
+
+        return response()->json($output);
+
+
+
+    }
+
 
 }

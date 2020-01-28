@@ -159,6 +159,8 @@ class BidderController extends Controller
         ];
         Bid::where('product_id',$id)->where('status',2)->update($update);
         $bid = Bid::where('product_id',$id)->where('status',1)->first();
+        $user = User::where('id',$bid->buyer_id)->first();
+        $user->update(['bid_count',$bid->bid_price+$user->bid_count]);
         Bid::where('product_id',$id)->where('status','<>',1)->delete();
         $buyer =  User::where('id',$bid->buyer_id)->first();
         $buyer->transaction_count = $buyer->transaction_count+1;
@@ -256,6 +258,8 @@ class BidderController extends Controller
     public function destroy($id)
     {
         $bid = Bid::find($id);
+        $user = User::where('id',$bid->buyer_id)->first();
+        $user->update(['bid_count'=>$user->bid_count+$bid->bid_price]);
         $product = Product::where('id',$bid->product_id)->first();
         $bid->delete();
         $success = "You deleted your bid successfully.";
@@ -265,5 +269,9 @@ class BidderController extends Controller
         return view('products.show_logged',['product'=>$product,'bid'=>$bids,'success'=>$success]);
     }
 
+    public function show_review($id){
+        $user = User::find($id);
+        return view('user.review_detail',['review'=>$user]);
+    }
 
 }
